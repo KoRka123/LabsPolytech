@@ -1,0 +1,52 @@
+name: Build RPM and DEB Packages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04  
+    
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up environment
+      run: |
+        sudo apt update
+        sudo apt install -y rpm build-essential dpkg-dev devscripts fakeroot
+
+
+    - name: Create RPM package
+      run: |
+        mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+        tar -czvf count_files.tar.gz count_files.sh
+        mv count_files.tar.gz ~/rpmbuild/SOURCES/
+        echo -e "Name:           count_files\nVersion:        1.0\nRelease:        1%{?dist}\nSummary:        A script to count files in /etc excluding directories and symlinks\nLicense:        GPL\nSource0:        count_files.tar.gz\nBuildArch:      noarch\n%description\nThis package contains a script to count the number of files in /etc excluding directories and symlinks.\n%prep\n%autosetup\n%build\n%install\nmkdir -p %{buildroot}/usr/local/bin\ncp count_files.sh %{buildroot}/usr/local/bin/\n%files\n/usr/local/bin/count_files.sh\n%changelog\n* Wed Dec 12 2024 Your Name <your-email@example.com> - 1.0-1\n- Initial package" > ~/rpmbuild/SPECS/count_files.spec
+        rpmbuild -ba ~/rpmbuild/SPECS/count_files.spec
+        mv ~/rpmbuild/RPMS/noarch/*.rpm ./  
+
+
+    - name: Create DEB package
+      run: |
+        mkdir -p ~/count_files_deb/usr/local/bin
+        cp count_files.sh ~/count_files_deb/usr/local/bin/
+        mkdir ~/count_files_deb/DEBIAN
+        echo -e "Package: count-files\nVersion: 1.0\nSection: utils\nPriority: optional\nArchitecture: all\nDepends: bash\nMaintainer: Your Name <your-email@example.com>\nDescription: A script to count files in /etc excluding directories and symlinks" > ~/count_files_deb/DEBIAN/control
+        dpkg-deb --build ~/count_files_deb
+        mv ~/count_files_deb.deb ./  # Переміщення DEB в корінь директорії
+
+
+    - name: Upload RPM and DEB packages
+      uses: actions/upload-artifact@v3
+      with:
+        name: count_files_packages
+        path: |
+          count_files*.rpm
+          count_files*.deb
