@@ -238,3 +238,135 @@ git push origin main
 ls
 cd ~
 ls
+yum install rpm build
+install rpmbuild
+sudo apt update
+sudo apt install alien rpm -y
+rpmbuild --version
+install rpmdevtools
+docker run -it centos
+sudo apt update
+docker run -it centos
+sudo dnf install rpm-build
+sudo apt update
+mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+echo "%_topdir $HOME/rpmbuild" > ~/.rpmmacros
+cd ~/rpmbuild/SPECS
+nano count_files.spec
+ls ~/rpmbuild/SPECS
+cd ~
+cp ~/bash-scripts/count_files.sh ~/rpmbuild/SOURCES/
+cd ~/rpmbuild/SPECS
+cp ~/bash-scripts/count_files.sh ~/rpmbuild/SOURCES/
+find ~/ -name "count_files.sh"
+cp /root/count_files.sh ~/rpmbuild/SOURCES/
+ls ~/rpmbuild/SOURCES/
+rpmbuild -ba ~/rpmbuild/SPECS/count_files.spec
+/root/rpmbuild/RPMS/x86_64/count_files-1.0-1.x86_64.rpm
+cp /root/LabsPolytech/count_files.sh ~/rpmbuild/SOURCES/
+ls ~/rpmbuild/SOURCES/
+rpmbuild -ba ~/rpmbuild/SPECS/count_files.spec
+/root/rpmbuild/RPMS/x86_64/count_files-1.0-1.x86_64.rpm
+sudo rpm -ivh /root/rpmbuild/RPMS/x86_64/count_files-1.0-1.x86_64.rpm
+/usr/local/bin/count_files.sh
+ls
+cd ~
+ls
+cd ~/rpmbuild
+ls
+BUILD
+cd ~
+mkdir -p ~/count_files_deb/usr/local/bin
+cp count_files.sh ~/count_files_deb/usr/local/bin/
+mkdir ~/count_files_deb/DEBIAN
+nano ~/count_files_deb/DEBIAN/control
+dpkg-deb --build ~/count_files_deb
+dpkg -i /root/count_files_deb.deb
+count_files.sh
+mkdir -p .github/workflows
+nano .github/workflows/build.yml
+git add .github/workflows/build.yml
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git push origin main
+git branch
+git push origin scripts
+git add .github/workflows/build.yml
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git add .github/workflows/build.yml
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git status
+git add .github/workflows/build.yml
+git add .
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git push origin scripts
+git add .github/workflows/build.yml
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git push origin main
+git branch
+git checkout -b main
+git add .
+git add .github/workflows/build.yml
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git add .github/workflows/build.yml
+git commit -m "Додано GitHub Actions для створення RPM та DEB пакетів"
+git push origin main
+git pull origin main
+git add <conflicted-file>
+git commit
+git push origin main
+git pull origin main
+git pull
+git config pull.rebase false
+git pull origin main
+git pull origin main --allow-unrelated-histories
+nano count_files.sh
+git add count_files.sh
+git commit
+git push origin main
+FROM jenkins/jenkins:lts
+USER root
+RUN apt-get update && apt-get install -y rpm dpkg
+USER jenkins
+nano Dockerfile
+docker build -t jenkins-custom .
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo systemctl start docker
+docker --version
+sudo snap install docker
+sudo systemctl start snap.docker.dockerd.service
+docker build -t jenkins-custom .
+docker images
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins-custom-container jenkins-custom
+sudo apt update
+sudo systemctl restart jenkins
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install -y curl rpm dpkg
+dpkg -l | grep jenkins
+sudo apt update
+sudo systemctl status jenkins
+sudo apt update
+java -jar /usr/share/jenkins/jenkins.war
+wsl --set-default-version 2
+nano Dockerfile
+# Start with an Ubuntu base image
+FROM ubuntu:20.04
+# Install required tools
+RUN apt-get update && apt-get install -y curl rpm dpkg
+# Copy the bash script to the container
+COPY file_count.sh /file_count.sh
+# Make the script executable
+RUN chmod +x /file_count.sh
+# Default command to execute the script
+CMD ["/file_count.sh"]
+nano Jenkinsfile
+FROM jenkins/jenkins:lts
+USER root
+# Install dependencies for RPM/DEB building
+RUN apt-get update && apt-get install -y     rpm     dpkg-dev     git     && apt-get clean
+# Install git and other dependencies
+USER jenkins
+nano Dockerfile
+nano Jenkinsfile
+docker build -t jenkins-build .
+docker run --rm -v $(pwd):/workspace jenkins-build
